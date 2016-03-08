@@ -111,7 +111,7 @@ app.changeEditMode = function (saveData) {
                     controlValues.forEach(function (item) {
 
                         editTextNode = document.createElement("option");
-                        editTextNode.value = item.text;
+                        editTextNode.value = item.value;
 
                         editValueNode = document.createTextNode(item.text);
                         editTextNode.appendChild(editValueNode);
@@ -142,7 +142,15 @@ app.changeEditMode = function (saveData) {
             if (editControl) {
                 // Add the edit control to the page
                 element.control.parentNode.insertBefore(editControl, element.control);
-
+                
+                // Set value to other control?
+                if (element.control.hasAttribute("data-set-value")) {
+                    editControl.onchange = function () {
+                        var targetControl = document.getElementById(element.control.getAttribute("data-set-value"));
+                        targetControl.value = this.value;
+                    };
+                }
+                
                 // Hide the read-only control
                 app.hideControl(element.control);
             }
