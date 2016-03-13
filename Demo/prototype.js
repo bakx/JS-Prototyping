@@ -13,7 +13,7 @@ app.currentState = app.states.READ; // Default to read state
 app.viewModeControls = [];
 app.editableControls = [];
 
-app.registerControl = function (type, control, viewState) {
+app.registerControl = function(type, control, viewState) {
     if (app.settings.debug) { console.log('Registering control') };
 
     type = isNaN(type) ? app.controlTypes[type] : type;
@@ -28,7 +28,7 @@ app.registerControl = function (type, control, viewState) {
                 "control": control,
                 "viewState": viewState
             }
-            );
+        );
     }
 
     if (type == app.controlTypes.INPUT) {
@@ -37,17 +37,17 @@ app.registerControl = function (type, control, viewState) {
                 "control": control,
                 "viewState": viewState
             }
-            );
+        );
     }
 }
 
-app.setState = function (state) {
+app.setState = function(state) {
     app.currentState = state;
 }
 
-app.setControlMode = function () {
+app.setControlMode = function() {
 
-    app.viewModeControls.forEach(function (element) {
+    app.viewModeControls.forEach(function(element) {
         if (element.viewState == app.currentState) {
             app.showControl(element.control);
         } else {
@@ -56,9 +56,9 @@ app.setControlMode = function () {
     });
 }
 
-app.changeEditMode = function (saveData) {
+app.changeEditMode = function(saveData) {
 
-    app.editableControls.forEach(function (element) {
+    app.editableControls.forEach(function(element) {
 
         var controlId = element.control.getAttribute("id");
         var controlType = element.control.getAttribute("data-type");
@@ -68,6 +68,8 @@ app.changeEditMode = function (saveData) {
             if (saveData && saveControl) {
                 if (controlType == "checkbox") {
                     element.control.setAttribute("data-state", (saveControl.checked == true ? "checked" : ""));
+                } else if (controlType == "dropdown") {
+                    element.control.innerHTML = saveControl.selectedOptions[0].text;
                 } else {
                     element.control.innerHTML = saveControl.value;
                 }
@@ -108,7 +110,7 @@ app.changeEditMode = function (saveData) {
 
                 if (controlValues.length > 0) {
 
-                    controlValues.forEach(function (item) {
+                    controlValues.forEach(function(item) {
 
                         editTextNode = document.createElement("option");
                         editTextNode.value = item.value;
@@ -126,7 +128,7 @@ app.changeEditMode = function (saveData) {
                 editSubControl = document.createElement("input");
                 editSubControl.type = "checkbox";
                 editSubControl.id = controlId + "_edit";
-                
+
                 // Add checked state (based on data attribute 'data-state')
                 if (element.control.hasAttribute("data-state") && element.control.getAttribute("data-state") === "checked") {
                     editSubControl.setAttribute("checked", true);
@@ -142,13 +144,32 @@ app.changeEditMode = function (saveData) {
             if (editControl) {
                 // Add the edit control to the page
                 element.control.parentNode.insertBefore(editControl, element.control);
+
+                // Set text value to other control?
+                if (element.control.hasAttribute("data-update-control-text")) {
+                    editControl.addEventListener("change", function() {           
+                        var targetControlID = element.control.getAttribute("data-update-control-text");
+                        var targetControl = document.getElementById(targetControlID + "_edit") ? document.getElementById(targetControlID + "_edit") : document.getElementById(targetControlID);
+
+                        if (element.control.getAttribute("data-type") == "dropdown") {
+                            targetControl.value = this.selectedOptions[0].text;
+                        } else {
+                            targetControl.value = this.value;
+                        }}, 
+                        false);
+                }
                 
-                // Set value to other control?
-                if (element.control.hasAttribute("data-set-value")) {
-                    editControl.onchange = function () {
-                        var targetControl = document.getElementById(element.control.getAttribute("data-set-value"));
-                        targetControl.value = this.value;
-                    };
+                if (element.control.hasAttribute("data-update-control-value")) {
+                    editControl.addEventListener("change", function() {           
+                        var targetControlID = element.control.getAttribute("data-update-control-value");
+                        var targetControl = document.getElementById(targetControlID + "_edit") ? document.getElementById(targetControlID + "_edit") : document.getElementById(targetControlID);
+
+                        if (element.control.getAttribute("data-type") == "dropdown") {
+                            targetControl.value = this.selectedOptions[0].value;
+                        } else {
+                            targetControl.value = this.value;
+                        }}, 
+                        false);
                 }
                 
                 // Hide the read-only control
@@ -158,7 +179,7 @@ app.changeEditMode = function (saveData) {
     });
 }
 
-app.createFeedbackDialog = function (title, message, feedbackMode, beforeElement) {
+app.createFeedbackDialog = function(title, message, feedbackMode, beforeElement) {
 
     // Handle support for feedback mode being passed as "DEFAULT, OK, ERROR" or their enum counter parts (0, 1, 2)
     feedbackMode = isNaN(feedbackMode) ? app.feedbackMode[feedbackMode] : feedbackMode;
@@ -212,15 +233,15 @@ app.createFeedbackDialog = function (title, message, feedbackMode, beforeElement
 
     // Delete the feedback control after N seconds (if set to greater than 0)
     if (app.settings.feedbackTimer > 0)
-        setTimeout(function () {
+        setTimeout(function() {
             feedbackControl.parentNode.removeChild(feedbackControl);
         }, 1000 * app.settings.feedbackTimer);
 }
 
-app.showControl = function (elem) {
+app.showControl = function(elem) {
     elem.style.display = "";
 }
 
-app.hideControl = function (elem) {
+app.hideControl = function(elem) {
     elem.style.display = "none";
 }
