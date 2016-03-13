@@ -11,11 +11,14 @@
     <script src="https://code.jquery.com/jquery-2.2.1.js" crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+    crossorigin="anonymous">
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+    crossorigin="anonymous"></script>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -25,110 +28,133 @@
 
     <!-- CSS support -->
     <style>
-	    span[data-state="checked"]:before {
-		    font-family: 'Glyphicons Halflings';
-		    content: "\e013";
-		    padding-right: 6px;
-		}
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+        
+        span[data-state=""]:before {
+            font: normal normal normal 14px/1 FontAwesome;
+            content: "\f096";
+            padding-right: 6px;
+        }
+        
+        span[data-state="checked"]:before {
+            font: normal normal normal 14px/1 FontAwesome;
+            content: "\f046";
+            padding-right: 6px;
+        }
     </style>
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-	<div class="row">
-		<div class="col-md-12">
-			<h1>Javascript Prototyping - View/Edit state</h1>
-			This page should be considered a technical prototype. It showcases how the prototype.js can be used to quickly create prototypes, 
-			that have multiple states (VIEW/EDIT) in the current build. The file prototype.js itself does not have any framework dependancies.
-		</div>
-	</div>
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Javascript Prototyping - View/Edit state</h1> This page should be considered a technical prototype. It showcases how the prototype.js can be used to quickly
+                create prototypes, that have multiple states (VIEW/EDIT) in the current build. The file prototype.js itself
+                does not have any framework dependancies.
+            </div>
+        </div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<div id="feedback"></div> 
-		</div>
-	</div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="feedback"></div>
+            </div>
+        </div>
 
-	<div class="row">
-		<div class="col-md-12">
-			<h3>Edit controls</h3>
-			<a href="#" onclick="javascript:edit(); return false;" data-visible-state="READ" title="Edit"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-			<a href="#" onclick="javascript:save(); return false;" data-visible-state="EDIT" title="Save"><i class="fa fa-floppy-o fa-2x"></i></a>
-			<a href="#" onclick="javascript:cancel(); return false;" data-visible-state="EDIT" title="Cancel"><i class="fa fa-ban fa-2x"></i></a>
-		</div>
-	</div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Edit controls</h3>
+                <a href="#" class="btn btn-default" onclick="javascript:edit(); return false;" data-visible-state="READ"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                <a href="#" class="btn btn-default" onclick="javascript:save(); return false;" data-visible-state="EDIT"><span class="glyphicon glyphicon-floppy-saved"></span> Save Changes</a>
+                <a href="#" class="btn btn-default" onclick="javascript:cancel(); return false;" data-visible-state="EDIT"><span class="glyphicon glyphicon-ban-circle"></span> Cancel</a>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Textbox controls</h4>
 
-	<div class="row">
-		<div class="col-md-12">
-			<h4>Textbox controls</h4>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label class="control-label" for="">Textbox #1:</label>
+                            <span class="edit-text-control" data-type="textbox" data-editable="yes"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label" for="">Textbox #2:</label>
+                            <span class="edit-text-control" data-type="textbox" data-editable="yes"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label" for="">Textbox #3:</label>
+                            <span class="edit-text-control" data-type="textbox" data-editable="yes"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-		    <form class="form-horizontal" role="form">
-			<div class="form-group">
-		        <div class="col-md-4">
-		            <label class="control-label" for="">Textbox #1:</label>
-		            <span class="edit-text-control" data-type="textbox" data-editable="yes">1</span>
-		        </div>
-		        <div class="col-md-4">
-		            <label class="control-label" for="">Textbox #2:</label>
-		            <span class="edit-text-control" data-type="textbox" data-editable="yes">2</span>
-		        </div>
-		        <div class="col-md-4">
-		            <label class="control-label" for="">Textbox #3:</label>
-		            <span class="edit-text-control" data-type="textbox" data-editable="yes">3</span>
-		        </div>
-		    </div>
-		    </form>
-		</div>
-	</div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Checkbox controls</h4>
 
-	<div class="row">
-		<div class="col-md-12">
-			<h4>Checkbox controls</h4>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <span data-type="checkbox" data-editable="yes" data-state="checked">Checkbox #1</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span data-type="checkbox" data-editable="yes">Checkbox #2</span>
+                        </div>
+                        <div class="col-md-4">
+                            <span data-type="checkbox" data-editable="yes">Checkbox #2</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-		    <form class="form-horizontal" role="form">
-			<div class="form-group">
-		        <div class="col-md-4">
-		        	<span data-type="checkbox" data-editable="yes" data-state="checked">Checkbox #1</span>
-		        </div>
-		        <div class="col-md-4">
-		        	<span data-type="checkbox" data-editable="yes">Checkbox #2</span>
-		        </div>
-		        <div class="col-md-4">
-		        	<span data-type="checkbox" data-editable="yes">Checkbox #2</span>
-		        </div>
-		    </div>
-		    </form>
-		</div>
-	</div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Dropdown controls</h4>
 
-	<div class="row">
-		<div class="col-md-12">
-			<h4>Dropdown controls</h4>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <span class="edit-text-control" data-type="dropdown" data-editable="yes" data-values='[{"text": "Text 1", "value": "1" }, {"text": "Text 2", "value": "2" }, {"text": "Text 3", "value": "3" }]'>Dropdown box</span>
+                        </div>
+                    </div>
 
-		    <form class="form-horizontal" role="form">
-			<div class="form-group">
-		        <div class="col-md-12">
-                	<span class="edit-text-control" data-type="dropdown" data-editable="yes" data-values='[{"text": "Text 1", "value": "1" }, {"text": "Text 2", "value": "2" }, {"text": "Text 3", "value": "3" }]'>Text 1</span>
-		        </div>
-		    </div>
-		    </form>
-		</div>
-	</div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <span id="update-onchange-dropdown-text" class="edit-text-control" data-type="textbox" data-editable="yes">Text</span>
+                        </div>
+                        <div class="col-md-2">
+                            <span id="update-onchange-dropdown-value" class="edit-text-control" data-type="textbox" data-editable="yes">Value</span>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="edit-text-control" data-type="dropdown" data-editable="yes" data-values='[{"text": "Text 1", "value": "0001" }, {"text": "Text 2", "value": "0002" }, {"text": "Text 3", "value": "0003" }]'
+                            data-update-control-text="update-onchange-dropdown-text" data-update-control-value="update-onchange-dropdown-value">Dropdown box that updates value of a textbox (onchange)</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <footer>
+            <div class="small">
+                THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+                WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+                INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+                WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH
+                THE USE OR PERFORMANCE OF THIS SOFTWARE.
+            </div>
+        </footer>
 
-	<div class="row">
-		<div class="col-md-12">
-			<div class="well">
-			    Copyright (c) 2016, Gideon Bakx<br><br>
-			    Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.<br><br>
-			    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-			</div>
-		</div>
-	</div>
-
-</div>
+    </div>
 
     <script>
         var feedbackControl = document.getElementById("feedback");
@@ -180,4 +206,5 @@
     </script>
 
 </body>
+
 </html>
